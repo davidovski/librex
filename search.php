@@ -59,7 +59,7 @@
                     {
                         $category_index = array_search($category, $categories);
 
-                        if (($opts->disable_bittorent_search && $category_index == 3) ||
+                        if (($opts->disable_bittorrent_search && $category_index == 3) ||
                             ($opts->disable_hidden_service_search && $category_index ==4))
                         {
                             continue;
