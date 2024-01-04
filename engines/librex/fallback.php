@@ -62,7 +62,7 @@
             $results = $librex_request->get_results();
 
             if (!empty($results)) {
-                error_log($results["results_source"]);
+                error_log( " got results from " . $results["results_source"]);
                 if (isset($results["results_source"]))
                     $results["results_source"] = $results["results_source"] . " via " . parse_url($instance)["host"];
                 else
