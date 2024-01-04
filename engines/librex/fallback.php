@@ -63,7 +63,7 @@
 
             if (!empty($results)) {
                 error_log( " got results from " . $results["results_source"]);
-                if (isset($results["results_source"]))
+                if (array_key_exists($results["results_source"]))
                     $results["results_source"] = $results["results_source"] . " via " . parse_url($instance)["host"];
                 else
                     $results["results_source"] = parse_url($instance)["host"];
