@@ -55,14 +55,14 @@
 
             if (parse_url($instance)["host"] == parse_url($_SERVER['HTTP_HOST'])["host"])
                 continue;
+            error_log("trying $instance");
 
             $librex_request = new LibreXFallback($instance, $opts, null);
 
             $results = $librex_request->get_results();
 
             if (!empty($results)) {
-                $source = $results["results_source"];
-                $results["results_source"] = $source . " via " . parse_url($instance)["host"];
+                $results["results_source"] = isset($results["results_source"]) ? ($results["results_source"] . " via ") : "" . parse_url($instance)["host"];
                 return $results;
             }
 
