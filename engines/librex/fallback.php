@@ -62,9 +62,8 @@
             $results = $librex_request->get_results();
 
             if (!empty($results)) {
-                $source = $results["results_source"];
-                if (isset($source))
-                    $results["results_source"] = $source . " via " . parse_url($instance)["host"];
+                if (isset($results["results_source"]))
+                    $results["results_source"] = $results["results_source"] . " via " . parse_url($instance)["host"];
                 else
                     $results["results_source"] = parse_url($instance)["host"];
 
