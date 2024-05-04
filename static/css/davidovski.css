@@ -1,0 +1,37 @@
+:root {
+    --main-bg: #191919;
+    --main-fg: #c5c8c6;
+
+    --result-link-fg: #b4d6d1;
+    --result-fg: #999da2;
+
+    --button-bg: #333333;
+
+    --special-result-border: opacity 0;
+    --special-text-background: #373b41;
+    --special-text-color: #fefefe;
+
+    --search-container-text-color: #F1F3F4;
+    --search-container-background-color: #373b41;
+    --search-container-background-border: #373b41;
+
+    --search-form-background-color: #191919;
+    
+    --border: #303134;
+
+    --footer-fg: #c5c8c6;
+    --footer-bg: #191919;
+    
+    color-scheme: dark;
+}
+
+.Y {
+    color: #5f819d;
+}
+.sub-search-button-wrapper a:visited {
+    color: #5f819d;
+}
+
+.sub-search-button-wrapper .active {
+    border-bottom: 2px #5f819d solid;
+}
