@@ -12,7 +12,7 @@
           $hash = file_get_contents(".git/refs/heads/main");
         }
 
-        echo "<a href='https://github.com/Ahwxorg/Librey/commit/$hash' target='_blank'>" . printftext("latest_commit", $hash) . "</a>";
+        //echo "<a href='https://github.com/Ahwxorg/Librey/commit/$hash' target='_blank'>" . printftext("latest_commit", $hash) . "</a>";
     ?>
 </div>
 </body>
