@@ -1,4 +1,5 @@
 <?php
+    require_once "misc/tools.php";
     class VideoSearch extends EngineRequest {
         protected $instance_url;
         public function get_request_url() {
@@ -16,8 +17,9 @@
                     $title = $response["title"];
                     $url = "https://youtube.com/watch?v=" . $response["videoId"];
                     $uploader = $response["author"];
-                    $views = $response["viewCount"];
+                    $views = $response["viewCountText"];
                     $date = $response["publishedText"];
+                    $lengthSeconds = $response["lengthSeconds"];
                     $thumbnail = $this->instance_url . "/vi/" . explode("/vi/" ,$response["videoThumbnails"][4]["url"])[1];
 
                     array_push($results,
@@ -29,6 +31,7 @@
                             "uploader" => htmlspecialchars($uploader),
                             "views" => htmlspecialchars($views),
                             "date" => htmlspecialchars($date),
+                            "lengthSeconds" => htmlspecialchars($lengthSeconds),
                             "thumbnail" => htmlspecialchars($thumbnail)
                         )
                     );
@@ -50,15 +53,19 @@
                 $uploader = $result["uploader"] ?? '';
                 $views = $result["views"] ?? '';
                 $date = $result["date"] ?? '';
-                $thumbnail = preg_replace('/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^\s]+)/', 'https://i.ytimg.com/vi/$1/maxresdefault.jpg', $url) ?? '';
+                $lengthSeconds = $result["lengthSeconds"] ?? '';
+                $length = seconds_to_human_readable($lengthSeconds) ?? '';
+                $thumbnail = "https://i.ytimg.com/vi/" . htmlspecialchars(explode("=", $url)[1]) . "/mqdefault.jpg" ?? '';
 
                 echo "<div class=\"text-result-wrapper\">";
-                echo "<a href=\"$url\">";
+                echo "<a rel=\"noreferer noopener\" href=\"$url\">";
                 echo "$base_url";
                 echo "<h2>$title</h2>";
                 echo "<img class=\"video-img\" src=\"image_proxy.php?url=$thumbnail\">";
                 echo "<br>";
                 echo "<span>$uploader - $date - $views views</span>";
+                echo "<br>";
+                echo "<span>$length</span>";
                 echo "</a>";
                 echo "</div>";
             }

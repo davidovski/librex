@@ -10,6 +10,34 @@
         }
     }
 
+    function seconds_to_human_readable($inputSeconds) {
+      $secondsInAMinute = 60;
+      $secondsInAnHour = 60 * $secondsInAMinute;
+      $secondsInADay = 24 * $secondsInAnHour;
+  
+      $days = floor($inputSeconds / $secondsInADay);
+      $hourSeconds = $inputSeconds % $secondsInADay;
+      $hours = floor($hourSeconds / $secondsInAnHour);
+      $minuteSeconds = $hourSeconds % $secondsInAnHour;
+      $minutes = floor($minuteSeconds / $secondsInAMinute);
+      $remainingSeconds = $minuteSeconds % $secondsInAMinute;
+      $seconds = ceil($remainingSeconds);
+      $timeParts = [];
+      $sections = [
+          'day' => (int)$days,
+          'hour' => (int)$hours,
+          'minute' => (int)$minutes,
+          'second' => (int)$seconds,
+      ];
+  
+      foreach ($sections as $name => $value){
+        if ($value > 0){
+          $timeParts[] = $value. ' '.$name.($value == 1 ? '' : 's');
+        }
+      }
+  
+      return implode(', ', $timeParts);
+    }
 
     function get_root_domain($url) {
         return parse_url($url, PHP_URL_HOST);

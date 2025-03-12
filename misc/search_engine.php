@@ -60,7 +60,10 @@
     }
 
     function load_opts() {
-        $opts = require_once "config.php";
+        if (isset($GLOBALS["opts"]))
+            $opts = $GLOBALS["opts"];
+        else
+            $opts = require_once "config.php";
 
         # account for the old, misspelled options
         if (isset($opts->disable_bittorent_search))
@@ -76,7 +79,7 @@
         $opts->type = (int) ($_REQUEST["t"] ?? 0);
         $opts->page = (int) ($_REQUEST["p"] ?? 0);
 
-        $opts->theme = $_REQUEST["theme"] ?? trim(htmlspecialchars($_COOKIE["theme"] ?? "amoled"));
+        $opts->theme = $_REQUEST["theme"] ?? trim(htmlspecialchars($_COOKIE["theme"] ?? $opts->default_theme ?? "dark"));
 
         $opts->safe_search = (int) ($_REQUEST["safe"] ?? 0) == 1 || isset($_COOKIE["safe_search"]);
 

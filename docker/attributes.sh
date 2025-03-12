@@ -31,6 +31,7 @@ export CONFIG_RATE_LIMIT_COOLDOWN="${CONFIG_RATE_LIMIT_COOLDOWN:-25}"
 export CONFIG_CACHE_TIME="${CONFIG_CACHE_TIME:-20}"
 export CONFIG_DISABLE_API="${CONFIG_DISABLE_API:-false}"
 export CONFIG_SHOW_RESULT_SOURCE="${CONFIG_SHOW_RESULT_SOURCE:-true}"
+export CONFIG_DEFAULT_THEME=${CONFIG_DEFAULT_THEME:-"dark"}
 
 # Supported apps integration configuration. These empty spaces can be set up using free hosts as pointers
 # A particular example is using the "https://yewtu.be" or a self-hosted host to integrate the invidious app to librey
@@ -58,7 +59,7 @@ export CURLOPT_PROXY=${CURLOPT_PROXY:-""}
 export CURLOPT_PROXYTYPE=${CURLOPT_PROXYTYPE:-"CURLPROXY_HTTP"}
 export CURLOPT_RETURNTRANSFER=${CURLOPT_RETURNTRANSFER:-true}
 export CURLOPT_ENCODING=${CURLOPT_ENCODING:-""}
-export CURLOPT_USERAGENT=${CURLOPT_USERAGENT:-"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Gecko/20100101 Firefox/116.0"}
+export CURLOPT_USERAGENT=${CURLOPT_USERAGENT:-"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0"}
 export CURLOPT_IPRESOLVE=${CURLOPT_IPRESOLVE:-"CURL_IPRESOLVE_WHATEVER"}
 export CURLOPT_CUSTOMREQUEST="${CURLOPT_CUSTOMREQUEST:-"GET"}"
 export CURLOPT_MAXREDIRS=${CURLOPT_MAXREDIRS:-5}

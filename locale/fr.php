@@ -1,5 +1,7 @@
 <?php
 
+// github.com/codedipper
+
 return array(
     "page_title" => "Recherche de LibreY",
     "search_button" => "Chercher avec LibreY",
@@ -24,6 +26,7 @@ return array(
 
     "settings_title" => "Paramètres",
     "settings_theme" => "Thème",
+    "settings_special_warning" => "Cette case à cocher va durer jusqu'à le bouton de 'Réinitialiser' c'est cliqué ou tes cookies sont dégagés.",
     "settings_special_disabled" => "Désactiver les requêtes spéciaux (par ex. : conversion de la monnaie)",
 
     "settings_frontends" => "Front-ends d'utilisateurs font pour intimité",

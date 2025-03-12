@@ -2,12 +2,17 @@
         require_once "misc/search_engine.php";
 
         // Reset all cookies when resetting, or before saving new cookies
-        if (isset($_REQUEST["reset"]) || isset($_REQUEST["save"])) {
+	if (isset($_REQUEST["reset"])) {
+        // if (isset($_REQUEST["reset"]) || isset($_REQUEST["save"])) {
+	// Removing isset($_REQUEST["save"])) fixes the problem that settings don't "stick" if you go back into settings page to make additional changes.
             if (isset($_SERVER["HTTP_COOKIE"])) {
                 $cookies = explode(";", $_SERVER["HTTP_COOKIE"]);
                 foreach($cookies as $cookie) {
                     $parts = explode("=", $cookie);
                     $name = trim($parts[0]);
+
+                    $domain = parse_url($_SERVER['SERVER_NAME']);
+
                     setcookie($name, "", time() - 1000);
                 }
             }
@@ -16,7 +21,14 @@
         if (isset($_REQUEST["save"])) {
             foreach($_POST as $key=>$value) {
                 if (!empty($value)) {
-                    setcookie($key, $value, time() + (86400 * 90), '/');
+                    setcookie($key, $value, [
+                        "expires" => time() + (86400 * 90), // Sets cookie to expire in 90 days
+                        "path" => "/",
+                        "domain" => "$domain",
+                        "secure" => true,       // Ensure cookies are only sent over HTTPS
+                        "httponly" => true,     // Prevent client-side JavaScript access to cookies
+                        "samesite" => "Strict"  // Strict SameSite policy for better protection against CSRF attacks
+                    ]);
                 } else {
                     setcookie($key, "", time() - 1000);
                 }
@@ -28,28 +40,30 @@
             die();
         }
 
-        $opts = load_opts();
 
         require_once "misc/header.php";
+        $opts = load_opts();
 ?>
 
     <title>LibreY - <?php printtext("settings_title");?></title>
     </head>
     <body>
         <div class="misc-container">
-            <h1>Settings</h1>
+            <h1><?php printtext("settings_title");?></h1>
             <form method="post" enctype="multipart/form-data" autocomplete="off">
               <div>
                 <label for="theme"><?php printtext("settings_theme");?>:</label>
                 <select name="theme">
                 <?php
+                    $default = $opts->default_theme ?? "davidovski";
                     $themes = "<option value=\"davidovski\">davidovski</option>
                     <option value=\"davidovski-light\">davidovski (light)</option>
+                    <option value=\"dark\">Dark</option>
                     <option value=\"darker\">Darker</option>
                     <option value=\"amoled\">AMOLED</option>
                     <option value=\"light\">Light</option>
                     <option value=\"auto\">Auto</option>
-					<option value=\"dracula\">Dracula</option>
+		    <option value=\"dracula\">Dracula</option>
                     <option value=\"nord\">Nord</option>
                     <option value=\"night_owl\">Night Owl</option>
                     <option value=\"discord\">Discord</option>
@@ -64,18 +78,24 @@
                     <option value=\"ubuntu\">Ubuntu</option>
                     <option value=\"tokyo_night\">Tokyo Night</option>";
 
-                    if (isset($opts->theme)) {
-                        $theme = $opts->theme;
-                        $themes = str_replace($theme . "\"", $theme . "\" selected", $themes);
+                    if (!isset($opts->theme)) {
+                        $theme = $default;
                     }
 
+                    $theme = $opts->theme;
+                    $themes = str_replace($theme . "\"", $theme . "\" selected", $themes);
                     echo $themes;
                 ?>
                 </select>
                 </div>
-                <div>
+		<div>
+                    <label><?php printtext("settings_special_warning");?></label><br><br>
                     <label><?php printtext("settings_special_disabled");?></label>
-                    <input type="checkbox" name="disable_special" <?php echo $opts->disable_special ? "checked"  : ""; ?> >
+                    <input type="checkbox" name="disable_special" <?php echo $opts->disable_special ? "checked"  : ""; ?> ><br>
+                    <label><?php printtext("settings_frontends_disable");?></label>
+                    <input type="checkbox" name="disable_frontends" <?php echo $opts->disable_frontends ? "checked"  : ""; ?> ><br>
+                    <label><?php printtext("settings_safe_search");?></label>
+                    <input type="checkbox" name="safe_search" <?php echo $opts->safe_search ? "checked"  : ""; ?> ><br>
                 </div>
 
                 <h2><?php printtext("settings_frontends");?></h2>
@@ -92,10 +112,6 @@
                                 echo "</div>";
                            }
                       ?>
-                </div>
-                <div>
-                    <label><?php printtext("settings_frontends_disable");?></label>
-                    <input type="checkbox" name="disable_frontends" <?php echo $opts->disable_frontends ? "checked"  : ""; ?> >
                 </div>
 
                 <h2><?php printtext("settings_search_settings");?></h2>
@@ -145,14 +161,6 @@
                         ?>
                         </select>
                     </div>
-                    <div>
-                        <label><?php printtext("settings_number_of_results");?></label>
-                        <input type="number" name="number_of_results" value="<?php echo htmlspecialchars($opts->number_of_results ?? "10") ?>" >
-                    </div>
-                </div>
-                <div>
-                    <label><?php printtext("settings_safe_search");?></label>
-                    <input type="checkbox" name="safe_search" <?php echo $opts->safe_search ? "checked"  : ""; ?> >
                 </div>
 
                 <div>

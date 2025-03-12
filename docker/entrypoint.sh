@@ -2,6 +2,6 @@
 
 /bin/sh -c docker/env-substitution.sh
 
-/bin/sh -c /usr/sbin/php-fpm83
+/bin/sh -c /usr/sbin/php-fpm84
 
 exec nginx -g "daemon off;"

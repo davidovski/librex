@@ -1,5 +1,7 @@
 <?php
 
+// github.com/Ahwxorg
+
 return array(
     "page_title" => "LibreY search",
     "search_button" => "Zoek met LibreY",
@@ -24,6 +26,7 @@ return array(
 
     "settings_title" => "Instellingen",
     "settings_theme" => "Thema",
+    "settings_special_warning" => "Als u dit selectievakje inschakelt, blijft de instelling actief totdat u op de Reset knop klikt of uw cookies op andere wijze aangepast worden.",
     "settings_special_disabled" => "Schakel speciale zoekopdrachten uit (bijvoorbeeld: valutaconversie)",
 
     "settings_frontends" => "Privacyvriendelijke frontends",

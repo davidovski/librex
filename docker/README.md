@@ -32,7 +32,7 @@ services:
       - CONFIG_GOOGLE_DOMAIN=com
       - CONFIG_LANGUAGE=en
       - CONFIG_NUMBER_OF_RESULTS=10
-      - CONFIG_INVIDIOUS_INSTANCE=https://yt.ahwx.org
+      - CONFIG_INVIDIOUS_INSTANCE=https://inv.nadeko.net
       - CONFIG_DISABLE_BITTORRENT_SEARCH=false
       - CONFIG_HIDDEN_SERVICE_SEARCH=false
       - CONFIG_INSTANCE_FALLBACK=true
@@ -43,11 +43,11 @@ services:
       - CURLOPT_PROXY_ENABLED=false
       - CURLOPT_PROXY=192.0.2.53:8388
       - CURLOPT_PROXYTYPE=CURLPROXY_HTTP
-      - CURLOPT_USERAGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Gecko/20100101 Firefox/116.0
+      - CURLOPT_USERAGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0
       - CURLOPT_FOLLOWLOCATION=true
     volumes:
       # - ./nginx_logs:/var/log/nginx # Disabled by default. These are the NGINX request logs.
-      - ./php_logs:/var/log/php83 # Enabled by default. These are the PHP error logs.
+      - ./php_logs:/var/log/php84 # Enabled by default. These are the PHP error logs.
     restart: unless-stopped
   watchtower: # Watchtower is not required but highly recommended, since Watchtower will re-pull and restart the LibreY container automatically whenever there's an update.
     image: containrrr/watchtower
@@ -102,9 +102,10 @@ This Docker image was developed with high configurability in mind, so here is th
 | CONFIG_HIDDEN_SERVICE_SEARCH     | false                                                                                                                                                                                                               | boolean                      | Defines whether hidden service search will be disabled                                                                                                           |
 | CONFIG_INSTANCE_FALLBACK         | true                                                                                                                                                                                                                | boolean                      | Choose whether or not to use the API on the backend to request to another LibreX/Y instance in case of rate limiting.                                            |
 | CONFIG_RATE_LIMIT_COOLDOWN       | 25                                                                                                                                                                                                                  | integer                      | Time in minutes to wait before sending requests to Google again after a rate limit.                                                                              |
-| CONFIG_CACHE_TIME                | 20                                                                                                                                                                                                                  | integer                      | Time in minutes to store results for in the cache.                                                                                                               |
+| CONFIG_CACHE_TIME                | 20                                                                                                                                                                                                                  | integer                      | Time in minutes to store results for in the cache. -1 will disable caching.                                                                                      |
 | CONFIG_DISABLE_API               | false                                                                                                                                                                                                               | boolean                      | Disable requests to /api.php                                                                                                                                     |
 | CONFIG_SHOW_RESULT_SOURCE        | true                                                                                                                                                                                                                | boolean                      | Whether to show where the result is from on the results page                                                                                                     |
+| CONFIG_DEFAULT_THEME             | "dark"                                                                                                                                                                                                              | "nord", "darker", "discord"  | The default theme for users without cookies or request parameters set.                                                                                           |
 
 ### Frontends
 
@@ -140,7 +141,7 @@ This Docker image was developed with high configurability in mind, so here is th
 | CURLOPT_PROXYTYPE      | "CURLPROXY_HTTP"                                                                   | "CURLPROXY_SOCKS4A", "CURLPROXY_SOCKS5", "CURLPROXY_SOCKS5_HOSTNAME" | Set the type of proxy connection (if you enabled it).                                                 |
 | CURLOPT_RETURNTRANSFER | true                                                                               | boolean                                                              | Return the transfer as a string of the return value of curl_exec() instead of outputting it directly. |
 | CURLOPT_ENCODING       | ""                                                                                 | string                                                               | Return the transfer as a string of the return value of curl_exec() instead of outputting it directly. |
-| CURLOPT_USERAGENT      | "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:116.0) Gecko/20100101 Firefox/116.0" | string                                                               | This variable defines the 'User-Agent' that curl will use to attempt to avoid being blocked.          |
+| CURLOPT_USERAGENT      | "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0" | string                                                               | This variable defines the 'User-Agent' that curl will use to attempt to avoid being blocked.          |
 | CURLOPT_IPRESOLVE      | "CURL_IPRESOLVE_WHATEVER"                                                          | "CURL_IPRESOLVE_V4", "CURL_IPRESOLVE_V6"                             | Use a fixed IP version for making requests, or what DNS prefers.                                      |
 | CURLOPT_CUSTOMREQUEST  | "GET"                                                                              | "POST", "CONNECT"                                                    | Defines the HTTP method that curl will use to make the request.                                       |
 | CURLOPT_MAXREDIRS      | 5                                                                                  | integer                                                              | The maximum amount of HTTP redirections to follow, only enabled with CURLOPT_FOLLOWLOCATION.          |
