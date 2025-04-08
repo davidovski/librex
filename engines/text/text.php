@@ -63,11 +63,8 @@
                 return new YaCyRequest($opts, $mh);
             }
             if ($engine == "google") {
-                //require_once "engines/text/google.php";
-                //return new GoogleRequest($opts, $mh);
-                
-                // Google is broken, see #214, return null
-                return null;
+                require_once "engines/text/google.php";
+                return new GoogleRequest($opts, $mh);
             }
 
             if ($engine == "duckduckgo") {
